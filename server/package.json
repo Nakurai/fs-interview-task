@@ -1,0 +1,30 @@
+{
+  "name": "fs-interview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev:windows": "set NODE_ENV=dev&& nodemon server.js",
+    "start:windows": "set NODE_ENV=production&& node server.js",
+    "start": "export NODE_ENV=production && node server.js",
+    "test": "jest"
+  },
+  "author": "nakurai",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
+  },
+  "jest": {
+    "globalSetup": "./tests/test-setup.js",
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}

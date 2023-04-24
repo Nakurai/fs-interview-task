@@ -89,6 +89,20 @@ const uids = proxy({
       throw error;
     }
   },
+  delete: async (uid) => {
+    try {
+      const url = `${rootUrl}/uid/${uid}`;
+      await api.del(url);
+      // everything went well, so we remove the uid from
+      // the local list instead of calling the list endpoint again
+      let index = uids.list.indexOf(uid);
+      if (index > -1) {
+        uids.list.splice(index, 1);
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
 });
 
 const state = proxy({ auth, user, uids });

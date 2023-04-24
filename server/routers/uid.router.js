@@ -45,4 +45,21 @@ router.get('/new', async (req, res) => {
   }
 });
 
+// route to create a new uid
+router.delete('/:uid', async (req, res) => {
+  try {
+    if (!req.user.permissions.includes(DB_PERMISSION.delete_uid)) {
+      log.error(
+        `forbidden access attempt to delete uid from ${req.user.username}`
+      );
+      return res.status(403).send({ error: 'Forbidden' });
+    }
+    await uidDb.deleteUid(req.params['uid']);
+    return res.json({ ok: true });
+  } catch (error) {
+    log.error(error.message);
+    return res.status(500).send({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;

@@ -8,4 +8,13 @@ async function createUid(uid) {
   DB_UIDS.push(uid);
 }
 
-module.exports = { getAll, createUid };
+async function deleteUid(uid) {
+  let index = DB_UIDS.indexOf(uid);
+  if (index > -1) {
+    DB_UIDS.splice(index, 1);
+  } else {
+    throw new Error(`unkwnown uid ${uid}`);
+  }
+}
+
+module.exports = { getAll, createUid, deleteUid };

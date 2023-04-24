@@ -1,7 +1,15 @@
-const DB_PERMISSION = { list_uid: 'list_uid', create_uid: 'create_uid' };
+const DB_PERMISSION = {
+  list_uid: 'list_uid',
+  create_uid: 'create_uid',
+  delete_uid: 'delete_uid',
+};
 const DB_ROLE = [
   { code: 'reader', label: 'Reader', permissions: ['list_uid'] },
-  { code: 'admin', label: 'Admin', permissions: ['list_uid', 'create_uid'] },
+  {
+    code: 'admin',
+    label: 'Admin',
+    permissions: ['list_uid', 'create_uid', 'delete_uid'],
+  },
 ];
 
 const DB_USER_PROFILE = [

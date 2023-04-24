@@ -28,6 +28,17 @@ export async function post(url, data) {
   return go(url, options);
 }
 
+export async function del(url) {
+  const options = {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  return go(url, options);
+}
+
 async function go(url, options) {
   if (token) {
     options.headers['Bearer'] = 'token ' + token;

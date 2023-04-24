@@ -7,15 +7,28 @@ function Dashboard() {
   const { auth, user, uids } = useSnapshot(store);
   const [error, setError] = useState(null);
 
+  const userIsAdmin = user.profile.roles.includes('admin');
+
   useEffect(() => {
     setError(null);
     uids.getList();
   }, []);
 
+  async function deleteUid(uid) {
+    try {
+      setError(null);
+      if (userIsAdmin) {
+        await uids.delete(uid);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
   async function createUid() {
     try {
       setError(null);
-      if (!user.profile.roles.includes('admin')) {
+      if (!userIsAdmin) {
         alert(
           'You dared to click?! Anyway, I have sent the request to the server to show that it is blocked on the backend side.'
         );
@@ -30,7 +43,7 @@ function Dashboard() {
   }
 
   return (
-    <div>
+    <div style={styles.page}>
       <h1>
         Connected as {user.profile.username}
         <button onClick={logout}>Logout</button>
@@ -47,11 +60,14 @@ function Dashboard() {
       {uids.list.length > 0 &&
         uids.list.map((uid, index) => (
           <div key={'uid' + index}>
-            uid {index + 1}: {uid}
+            uid {index + 1}: {uid}{' '}
+            {userIsAdmin && (
+              <button onClick={() => deleteUid(uid)}>delete</button>
+            )}
           </div>
         ))}
       <p>
-        {!user.profile.roles.includes('admin') && (
+        {!userIsAdmin && (
           <span>
             You are not admin. Do <b>not</b> click on this button!
           </span>
@@ -65,6 +81,7 @@ function Dashboard() {
 }
 
 const styles = {
+  page: { padding: 20 },
   error: {
     color: 'red',
     fontSize: 11,

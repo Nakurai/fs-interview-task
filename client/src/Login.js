@@ -12,7 +12,7 @@ function Login() {
   const [error, setError] = useState(null);
 
   function onChange(e) {
-    setFormInputs({ ...formInputs, [e.target.id]: e.target.value });
+    setFormInputs({ ...formInputs, [e.target.id]: e.target.value.trim() });
   }
   async function onSubmit(e) {
     try {
@@ -27,7 +27,7 @@ function Login() {
   return (
     <form onSubmit={onSubmit} style={styles.form}>
       <label>
-        Email (reader@fs.com or admin@fs.com): <br />
+        Email ( 'reader@fs.com' or 'admin@fs.com'): <br />
         <input type='text' id='username' onChange={onChange} />
       </label>
       <br />

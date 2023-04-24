@@ -1,16 +1,34 @@
 const userDb = require('../db/user.db.js');
 const authDb = require('../db/auth.db.js');
 
+// This would be handled by the authentication system.
+// in case we want to do it here, we would use a strong encryption
+// algorithm and a salt stored anywhere but in the database.
 async function hashPwd(pwd) {
   return pwd;
 }
 
+// This functions is to make sure the JWT is valid
+// at the very least, we'll unpack the base64 encoded information
+// and make sure it's not exprired
+// - some authentication solution will have a url we can call that will
+// tell us if the token is valid, has been revoked, or other things
+// - zero proof systems will have a function we can use to make sure
+// it was signed properly without having to call a URL
+//
 async function validateToken(token, userId) {
   const user1Valid = userId === 1 && token === 'abc';
   const user2Valid = userId === 2 && token === 'def';
   return user1Valid || user2Valid;
 }
 
+// in the case where we handle JWT on our backend, here we would call
+// an authentication system with the user's credentials and it would return
+// a token we can store in our database
+//
+// in the case of systems like firebase or Okta for example, this would happen
+// on the front end, and we would just collect the token and make sure it's valid
+// the last case's advantage is that we never handle user's credentials.
 async function createToken(user) {
   // user jwt token library here to create a token
   const token = user.id === 1 ? 'abc' : 'def';

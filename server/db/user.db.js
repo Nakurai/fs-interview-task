@@ -3,12 +3,20 @@ const DB_PERMISSION = {
   create_uid: 'create_uid',
   delete_uid: 'delete_uid',
 };
+
+// users have roles. Roles have permissions
+// this system allows us to decouple the permission used
+// in the backend from the user's roles.
 const DB_ROLE = [
-  { code: 'reader', label: 'Reader', permissions: ['list_uid'] },
+  { code: 'reader', label: 'Reader', permissions: [DB_PERMISSION.list_uid] },
   {
     code: 'admin',
     label: 'Admin',
-    permissions: ['list_uid', 'create_uid', 'delete_uid'],
+    permissions: [
+      DB_PERMISSION.list_uid,
+      DB_PERMISSION.create_uid,
+      DB_PERMISSION.delete_uid,
+    ],
   },
 ];
 
